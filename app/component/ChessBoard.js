@@ -2,23 +2,19 @@ import React from 'react';
 import uuid from 'uuid/v4';
 import config from '../config'
 import Cell from './Cell';
+import chessStore from '../store/chessStore';
+
 import './ChessBoard.scss';
 
 export default class ChessBoard extends React.Component{
     constructor(props){
         super(props);
-
         this.state = {};
+        this.state.data = chessStore.getChessData();
 
-        let data = [];
-        for(let i=0; i<config.shape.height; i++){
-            let row = [];
-            for(let j=0; j<config.shape.width; j++){
-                row.push(0); // init with all 0s
-            }
-            data.push(row);
-        }
-        this.state.data = data;
+        chessStore.on('REFRESH', (data) => {
+            this.setState({data});
+        });
     }
 
     render(){
