@@ -5,13 +5,13 @@ import {move} from '../action/chessAction';
 export default class Cell extends React.Component{
     constructor(props){
         super(props);
-        this.state = {};
-        this.state.sign = this.datum2sign(props.datum);
     }
 
     render(){
         return (
-            <span key={uuid()} className="chess-cell" onClick={this.onClick.bind(this)}>{this.state.sign}</span>
+            <span key={uuid()} className="chess-cell" onClick={this.onClick.bind(this)}>
+                {this.datum2sign(this.props.datum)}
+            </span>
         );
     }
 
@@ -22,6 +22,9 @@ export default class Cell extends React.Component{
     }
 
     onClick(){
+        if( this.props.row === undefined || this.props.col === undefined )
+            return;
+
         move(this.props.row, this.props.col);
     }
 }

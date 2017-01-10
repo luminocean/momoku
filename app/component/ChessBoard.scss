@@ -2,9 +2,7 @@ $cell-num-in-row: 15;
 $cell-width: 40px;
 $cell-height: $cell-width;
 $cell-border-width: 2px;
-$text-font-size: 4em;
-$font-stack: Monaco, Helvetica, sans-serif;
-
+$icon-font-size: 4em;
 $unicode-sign-offset: 10px;
 
 .chess-board {
@@ -15,7 +13,7 @@ $unicode-sign-offset: 10px;
     width: $cell-width;
     height: $cell-height;
     border: $cell-border-width solid black;
-    font-size: $text-font-size;
+    font-size: $icon-font-size;
 
     text-align: center;
     vertical-align: bottom;

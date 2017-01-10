@@ -47,6 +47,10 @@ class ChessStore extends EventEmitter{
         return this.state.data;
     }
 
+    getNextMover(){
+        return this.state.progress;
+    }
+
     // simulates a state machine
     move(row, col){
         let data = this.state.data;

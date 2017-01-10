@@ -1,0 +1,10 @@
+$icon-font-size: 2em;
+
+.chess-status {
+  text-align: center;
+  vertical-align: middle;
+
+  .chess-cell {
+    font-size: $icon-font-size;
+  }
+}
