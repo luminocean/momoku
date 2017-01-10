@@ -1,0 +1,25 @@
+$cell-width: 40px;
+$cell-height: $cell-width;
+$cell-border-width: 2px;
+$font-stack: Monaco, Helvetica, sans-serif;
+
+
+.chess-board{
+  font-family: $font-stack;
+
+  .chess-row{
+    margin: 0 0 -5px 0;
+  }
+
+  .chess-cell{
+    display: inline-block;
+    width: $cell-width;
+    height: $cell-height;
+    border: $cell-border-width solid black;
+    background-color: burlywood;
+  }
+
+  .chess-cell:hover{
+    background-color: darkgoldenrod;
+  }
+}
