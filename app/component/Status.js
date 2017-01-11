@@ -1,6 +1,5 @@
 import React from 'react';
 import chessStore from '../store/chessStore';
-import Cell from './Cell';
 import config from '../config'
 
 import './Status.scss'
@@ -21,7 +20,6 @@ export default class Status extends React.Component {
     render() {
         return (
             <div className="chess-status">
-                <span>{[1,2].indexOf(this.state.next) !== -1 ? 'Next:':''}</span><Cell datum={this.state.next}/>
                 <span>{this.state.message}</span>
             </div>
         );

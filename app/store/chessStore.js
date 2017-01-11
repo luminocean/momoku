@@ -1,6 +1,8 @@
 import dispatcher from '../dispatcher';
 import EventEmitter from 'events';
 import config from '../config';
+import {think} from '../stragety/stragety'
+import * as util from '../utility'
 
 /**
  * Data convention:
@@ -11,8 +13,8 @@ import config from '../config';
  * - 4 for white wins
  * - 5 for even
  */
-class ChessStore extends EventEmitter{
-    constructor(props){
+class ChessStore extends EventEmitter {
+    constructor(props) {
         super(props);
 
         this.prefix = 'CHESS_';
@@ -20,9 +22,9 @@ class ChessStore extends EventEmitter{
 
         // init chess board data
         let data = [];
-        for(let i=0; i<config.shape.height; i++){
+        for (let i = 0; i < config.shape.height; i++) {
             let row = [];
-            for(let j=0; j<config.shape.width; j++){
+            for (let j = 0; j < config.shape.width; j++) {
                 row.push(0); // init with all 0s
             }
             data.push(row);
@@ -33,35 +35,46 @@ class ChessStore extends EventEmitter{
         dispatcher.register(this.onDispatch.bind(this));
     }
 
-    onDispatch(payload){
+    onDispatch(payload) {
         let type = payload.type;
-        if(!type.startsWith(this.prefix)) return;
+        if (!type.startsWith(this.prefix)) return;
 
         let command = type.substring(this.prefix.length);
-        if(command === 'MOVE'){
-           this.move(payload.row, payload.col)
+        if (command === 'MOVE') {
+            this.playMove(payload.row, payload.col)
+        } else if (command === 'AI_MOVE') {
+            this.playAIMove();
         }
     }
 
-    getChessData(){
+    getChessData() {
         return this.state.data;
     }
 
-    getNextMover(){
+    getNextMover() {
         return this.state.progress;
     }
 
+    playAIMove() {
+        // the mover the AI will act as
+        let mover = this.state.progress;
+        // next move
+        let {row, col} = think(this.state.data, mover);
+        // play the move thought of AI
+        this.playMove(row, col);
+    }
+
     // simulates a state machine
-    move(row, col){
+    playMove(row, col) {
         // someone wins already
-        if(this.state.progress >= 3) return;
+        if (this.state.progress >= 3) return;
 
         let data = this.state.data;
         let progress = this.state.progress;
 
         let currentChess = data[row][col];
         // cell already taken, invalid
-        if( currentChess > 0 ){
+        if (currentChess > 0) {
             return this.emit('ALREADY_TAKEN', {row, col});
         }
 
@@ -70,63 +83,58 @@ class ChessStore extends EventEmitter{
 
         // see what's going
         let evaluation = this.isAnyoneWins(row, col);
-        if(evaluation === 0) {
+        if (evaluation === 0) {
             // swtich to next mover
             this.state.progress = progress === 1 ? 2 : 1;
-            this.emit('REFRESH', this.state.data);
-        }else if(evaluation === 1 || evaluation === 2){
+            this.emit('REFRESH', {data: this.state.data, last: {row, col}});
+        } else if (evaluation === 1 || evaluation === 2) {
             // mark that someone wins
             this.state.progress = evaluation + 2;
             // refresh even though someone wins
             // so that five in a row will show on the chess board
-            this.emit('REFRESH', this.state.data);
+            this.emit('REFRESH', {data: this.state.data, last: {row, col}});
             this.emit('WINS', evaluation);
         }
     }
 
     // evaluate the situation from the given start position
     // and gives an evaluation result
-    isAnyoneWins(row, col){
+    isAnyoneWins(row, col) {
         let data = this.state.data;
         let limit = config.rules.limit;
         let mover = data[row][col];
 
-        let plans = [[1,0], [0,1], [1,1]];
-        let poses = [-4,-3,-2,-1,0,1,2,3,4];
+        let plans = [[1, 0], [0, 1], [1, 1]];
+        let poses = [-4, -3, -2, -1, 0, 1, 2, 3, 4];
 
         let n = 0; // how many same moves in a line
         // try three directions
-        for(let i=0; i<plans.length; i++){
+        for (let i = 0; i < plans.length; i++) {
             let plan = plans[i];
 
             let max = 0;
-            for(let j=0; j<poses.length; j++){
+            for (let j = 0; j < poses.length; j++) {
                 let pos = poses[j];
 
                 // position used to test
                 let r = row + plan[0] * pos;
                 let c = col + plan[1] * pos;
-                if(!this.isValidPosition(r, c)) continue;
+                if (!util.isValidPosition(r, c)) continue;
 
-                if(data[r][c] === mover){
+                if (data[r][c] === mover) {
                     n += 1;
-                    if( n > max ){
+                    if (n > max) {
                         max = n;
                         // we have a winner
-                        if( max === limit ) return mover;
+                        if (max === limit) return mover;
                     }
-                }else{
+                } else {
                     n = 0;
                 }
             }
         }
 
         return 0;
-    }
-
-    isValidPosition(row, col){
-        let {width, height} = config.shape;
-        return 0 <= row && row < height && 0 <= col && col < width;
     }
 }
 

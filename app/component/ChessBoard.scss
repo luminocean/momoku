@@ -8,7 +8,11 @@ $cell-border-width: 2px;
     border: $cell-border-width solid black;
   }
 
-  .chess-cell:hover {
+  .chess-cell:hover{
     background-color: darkgoldenrod;
+  }
+
+  .last-cell{
+    border-style: dashed;
   }
 }

@@ -9,13 +9,15 @@ import './ChessBoard.scss'
 export default class ChessBoard extends React.Component{
     constructor(props){
         super(props);
-        this.state = {};
-        this.state.data = chessStore.getChessData();
+        this.state = {
+            data: chessStore.getChessData(),
+            last: {}
+        };
 
         // once the store fires a refresh event,
         // ChessBoard repaints everything
-        chessStore.on('REFRESH', (data) => {
-            this.setState({data});
+        chessStore.on('REFRESH', ({data, last}) => {
+            this.setState({data, last});
         });
     }
 
@@ -43,7 +45,8 @@ export default class ChessBoard extends React.Component{
     generateCells(width, row){
         let cells = [];
         for(let i=0; i<width; i++){
-            cells.push(<Cell key={uuid()} datum={this.state.data[row][i]} row={row} col={i} />);
+            cells.push(<Cell key={uuid()} datum={this.state.data[row][i]} row={row} col={i}
+                             isLast={row === this.state.last.row && i === this.state.last.col} />);
         }
         return cells;
     }

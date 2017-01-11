@@ -1,5 +1,6 @@
 import React from 'react';
 import uuid from 'uuid/v4';
+import classNames from 'classnames';
 import config from '../config'
 import {move} from '../action/chessAction';
 import './Cell.scss'
@@ -11,7 +12,8 @@ export default class Cell extends React.Component{
 
     render(){
         return (
-            <span key={uuid()} className="chess-cell" onClick={this.onClick.bind(this)}>
+            <span key={uuid()} onClick={this.onClick.bind(this)}
+                  className={classNames({"chess-cell": true, "last-cell": this.props.isLast})} >
                 {this.datum2sign(this.props.datum)}
             </span>
         );
@@ -19,8 +21,7 @@ export default class Cell extends React.Component{
 
     datum2sign(datum){
         let movers = config.movers;
-        if( datum === 1 ) return movers[datum].icon;
-        if( datum === 2 ) return movers[datum].icon;
+        if( [1,2].indexOf(datum) !== -1 ) return movers[datum].icon;
         return '';
     }
 

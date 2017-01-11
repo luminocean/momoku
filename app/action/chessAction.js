@@ -5,3 +5,9 @@ export function move(row, col){
         type: 'CHESS_MOVE', row, col
     });
 }
+
+export function AIMove(){
+    dispatcher.dispatch({
+        type: 'CHESS_AI_MOVE'
+    })
+}
