@@ -33,7 +33,7 @@ const patternMatches = (pivotX, pivotY, square, pattern) => {
         for(let j=0; j<patternShape[0]; j++){
             let patternDatum = pattern[i][j];
             if( patternDatum === 9 ) continue;
-            if(patternDatum !== square[pivotY+i][pivotY+j]) return false;
+            if(patternDatum !== square[pivotY+i][pivotX+j]) return false;
         }
     }
     return true;
@@ -48,8 +48,8 @@ const comparePatternsInSquare = (square, patterns) => {
         // pattern shape
         let ps = util.array2DShape(pattern);
 
-        for(let x=0; x<ss[0]-ps[0]; x++){
-            for(let y=0; y<ss[1]-ps[1]; y++){
+        for(let x=0; x<=ss[0]-ps[0]; x++){
+            for(let y=0; y<=ss[1]-ps[1]; y++){
                 if( patternMatches(x, y, square, pattern) ){
                     if( point > maxPoint ) maxPoint = point;
                 }

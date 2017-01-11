@@ -37,5 +37,5 @@ export function stopForDebug(square){
         if( filter(square, r, c) ) count++;
     });
 
-    return count >= 2;
+    return count >= 3;
 }
