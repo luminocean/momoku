@@ -1,6 +1,8 @@
 import React from 'react';
 import uuid from 'uuid/v4';
+import config from '../config'
 import {move} from '../action/chessAction';
+import './Cell.scss'
 
 export default class Cell extends React.Component{
     constructor(props){
@@ -16,8 +18,9 @@ export default class Cell extends React.Component{
     }
 
     datum2sign(datum){
-        if( datum === 1 ) return '\u25CB';
-        if( datum === 2 ) return '\u25CF';
+        let movers = config.movers;
+        if( datum === 1 ) return movers[datum].icon;
+        if( datum === 2 ) return movers[datum].icon;
         return '';
     }
 

@@ -1,23 +1,11 @@
-$cell-num-in-row: 15;
-$cell-width: 40px;
-$cell-height: $cell-width;
+@import "./Cell";
+
 $cell-border-width: 2px;
-$icon-font-size: 4em;
-$unicode-sign-offset: 10px;
 
-.chess-board {
-  .chess-cell {
-    display: inline-block;
-    overflow: hidden;
+.chess-board{
+  .chess-cell{
     background-color: burlywood;
-    width: $cell-width;
-    height: $cell-height;
     border: $cell-border-width solid black;
-    font-size: $icon-font-size;
-
-    text-align: center;
-    vertical-align: bottom;
-    line-height: $cell-height - $unicode-sign-offset;
   }
 
   .chess-cell:hover {

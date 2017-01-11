@@ -4,7 +4,7 @@ import config from '../config'
 import Cell from './Cell';
 import chessStore from '../store/chessStore';
 
-import './ChessBoard.scss';
+import './ChessBoard.scss'
 
 export default class ChessBoard extends React.Component{
     constructor(props){
@@ -12,6 +12,8 @@ export default class ChessBoard extends React.Component{
         this.state = {};
         this.state.data = chessStore.getChessData();
 
+        // once the store fires a refresh event,
+        // ChessBoard repaints everything
         chessStore.on('REFRESH', (data) => {
             this.setState({data});
         });
@@ -37,6 +39,7 @@ export default class ChessBoard extends React.Component{
         return rows;
     }
 
+    // generate cells in a single row
     generateCells(width, row){
         let cells = [];
         for(let i=0; i<width; i++){

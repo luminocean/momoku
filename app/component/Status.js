@@ -1,23 +1,27 @@
 import React from 'react';
 import chessStore from '../store/chessStore';
 import Cell from './Cell';
+import config from '../config'
+
 import './Status.scss'
 
 export default class Status extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            message: '',
+            next: chessStore.getNextMover()
+        };
 
         chessStore.on('ALREADY_TAKEN', this.showAlreadyTaken.bind(this));
         chessStore.on('REFRESH', this.refresh.bind(this));
+        chessStore.on('WINS', this.wins.bind(this));
     }
 
     render() {
         return (
             <div className="chess-status">
-                <span>Next: </span>
-                <Cell datum={this.state.next}/>
-                <span> </span>
+                <span>{[1,2].indexOf(this.state.next) !== -1 ? 'Next:':''}</span><Cell datum={this.state.next}/>
                 <span>{this.state.message}</span>
             </div>
         );
@@ -29,9 +33,11 @@ export default class Status extends React.Component {
     }
 
     refresh() {
-        let message = '';
-        this.setState({message, next: chessStore.getNextMover()});
+        this.setState({message: '', next: chessStore.getNextMover()});
+    }
 
-        console.log(chessStore.getNextMover());
+    wins(mover){
+        let message = `Winner is the ${config.movers[mover].name}!`;
+        this.setState({message, next: 0});
     }
 }

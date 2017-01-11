@@ -1,0 +1,19 @@
+$cell-num-in-row: 15;
+$cell-width: 40px;
+$cell-height: $cell-width;
+$icon-font-size: 4em;
+$unicode-sign-offset: 10px;
+
+.chess-cell {
+  display: inline-block;
+  overflow: hidden;
+  text-align: center;
+  vertical-align: bottom;
+
+  width: $cell-width;
+  height: $cell-height;
+  font-size: $icon-font-size;
+  line-height: $cell-height - $unicode-sign-offset;
+}
+
+

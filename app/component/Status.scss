@@ -1,9 +1,12 @@
-$icon-font-size: 2em;
+@import "./Cell";
 
-.chess-status {
-  text-align: center;
-  vertical-align: middle;
+$icon-font-size: 3em;
+$unicode-sign-offset: 5px;
 
+.chess-status{
+  span{
+    line-height: $cell-height - $unicode-sign-offset;
+  }
   .chess-cell {
     font-size: $icon-font-size;
   }
