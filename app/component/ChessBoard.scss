@@ -1,6 +1,7 @@
 @import "./Cell";
 
 $cell-border-width: 2px;
+$row-index-width: 25px;
 
 .chess-board{
   .chess-cell{
@@ -14,5 +15,18 @@ $cell-border-width: 2px;
 
   .last-cell{
     border-style: dashed;
+  }
+
+  .row-index{
+    display: inline-block;
+    text-align: center;
+    width: $row-index-width;
+
+  }
+
+  .col-index{
+    display: inline-block;
+    text-align: center;
+    width: $cell-width + $cell-border-width * 2;
   }
 }
