@@ -35,10 +35,10 @@ export function think(data, mover){
     let moves = [];
 
     // only go through empty cell
-    util.loopThrough2DArray(data, (datum) => datum === 0, (row, col) => {
+    util.loopThrough2DArray(data, (row, col) => {
         let point = evaluateMove(data, row, col, mover);
         moves.push({row, col, point});
-    });
+    }, (datum) => datum === 0);
 
     // reverse order, higher points and nearer to center first
     moves.sort((a, b) => {

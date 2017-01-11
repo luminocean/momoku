@@ -14,7 +14,7 @@ export function isValidPosition(row, col){
     return 0 <= row && row < height && 0 <= col && col < width;
 }
 
-export function loopThrough2DArray(array, filter, callback){
+export function loopThrough2DArray(array, callback, filter = () => true){
     let h = array.length;
     if( array[0] === undefined ) return;
 
@@ -39,9 +39,9 @@ export function stopForDebug(square){
     };
 
     let count = 0;
-    loopThrough2DArray(square, (datum) => datum !== 0, (r, c) => {
+    loopThrough2DArray(square, (r, c) => {
         if( filter(square, r, c) ) count++;
-    });
+    }, (datum) => datum !== 0);
 
     return count >= 3;
 }

@@ -19,7 +19,7 @@ const cropSquare = (data, row, col, radius) => {
 const convertView = (square, mover) => {
     if( mover === 1 ) return square; // no need to convert for mover 1
 
-    util.loopThrough2DArray(square, () => true, (r, c) => {
+    util.loopThrough2DArray(square, (r, c) => {
         if( [1,2].indexOf(square[r][c]) !== -1 ){
             square[r][c] = square[r][c] === 1 ? 2:1;
         }
