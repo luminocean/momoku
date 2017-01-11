@@ -27,6 +27,12 @@ export function loopThrough2DArray(array, filter, callback){
     }
 }
 
+export function loopMap(length, callback){
+    let results = [];
+    for(let i=0; i<length; i++) results.push(callback(i));
+    return results;
+}
+
 export function stopForDebug(square){
     let filter = (square, r, c) => {
         return square[r][c] !== 0 && square[r][c+1] !== undefined && square[r][c+1] !== 0;
