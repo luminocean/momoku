@@ -27,7 +27,7 @@ export function loopThrough2DArray(array, filter, callback){
     }
 }
 
-export function loopMap(length, callback){
+export function mapLoop(length, callback){
     let results = [];
     for(let i=0; i<length; i++) results.push(callback(i));
     return results;

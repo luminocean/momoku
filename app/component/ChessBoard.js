@@ -25,18 +25,14 @@ export default class ChessBoard extends React.Component{
     render(){
         return (
             <div className="chess-board">
-                {util.loopMap(config.shape.height, (row) => {
-                    return (
-                        <div key={uuid()} className="chess-row">
-                            {util.loopMap(config.shape.width, (col) => {
-                                return (
-                                    <Cell key={uuid()} datum={this.state.data[row][col]} row={row} col={col}
-                                          isLast={row === this.state.last.row && col === this.state.last.col} />
-                                );
-                            })}
-                        </div>
-                    );
-                })}
+                {util.mapLoop(config.shape.height, (row) =>
+                    <div key={uuid()} className="chess-row">
+                        {util.mapLoop(config.shape.width, (col) =>
+                            <Cell key={uuid()} datum={this.state.data[row][col]} row={row} col={col}
+                                  isLast={row === this.state.last.row && col === this.state.last.col} />
+                        )}
+                    </div>
+                )}
             </div>
         );
     }

@@ -104,7 +104,7 @@ class ChessStore extends EventEmitter {
         let limit = config.rules.limit;
         let mover = data[row][col];
 
-        let plans = [[1, 0], [0, 1], [1, 1]];
+        let plans = [[1, 0], [0, 1], [1, 1], [-1, 1], [1, -1]];
         let poses = [-4, -3, -2, -1, 0, 1, 2, 3, 4];
 
         let n = 0; // how many same moves in a line
