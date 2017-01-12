@@ -32,7 +32,7 @@ const common = {
         index: PATHS.app + '/index.js'
     },
     output: {
-        path: PATHS.build,
+        path: process.env['WEBPACK_OUTPUT_PATH'] || PATHS.build,
         // append hash only in production
         filename: `static/js/[name]${TARGET === 'build'?'.[hash:8]':''}.js`,
         chunkFilename: `static/js/[name]${TARGET === 'build'?'.[chunkhash:8]':''}.chunk.js`,

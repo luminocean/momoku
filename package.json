@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server",
-    "build": "webpack"
+    "build": "webpack",
+    "build-github-page": "WEBPACK_OUTPUT_PATH='./docs' npm run build"
   },
   "keywords": [],
   "author": "luMinO",
