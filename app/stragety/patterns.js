@@ -122,7 +122,7 @@ const dictionary = [
             });
         }
     },
-    // diagonally
+    // semi-diagonally
     {
         pattern: [
             [1,1,1,1,0],
@@ -154,10 +154,82 @@ const dictionary = [
             });
         }
     },
+    // full-diagonally (part 1)
+    {
+        pattern: [
+            [9,9,9,9,1,9,9,9,9],
+            [9,9,9,1,9,1,9,9,9],
+            [9,9,1,9,9,9,1,9,9],
+            [9,1,9,9,9,9,9,1,9],
+            [0,9,9,9,9,9,9,9,0],
+        ],
+        point: 90,
+        getPatterns: function() {
+            return mixupPatterns({
+                template1: [
+                    [9,9,9,9,1],
+                    [9,9,9,1,9],
+                    [9,9,1,9,9],
+                    [9,1,9,9,9],
+                    [0,9,9,9,9]
+                ],
+                yrange: [0, 0],
+                template2: [
+                    [1,9,9,9,9],
+                    [9,1,9,9,9],
+                    [9,9,1,9,9],
+                    [9,9,9,1,9],
+                    [9,9,9,9,0]
+                ],
+                xrange: [0,4],
+                matParam: {
+                    width: 9,
+                    height: 5,
+                    val:9
+                }
+            });
+        }
+    },
+    // full-diagonally (part 2)
+    {
+        pattern: [
+            [9,9,9,9,0,9,9,9,9],
+            [9,9,9,1,9,1,9,9,9],
+            [9,9,1,9,9,9,1,9,9],
+            [9,1,9,9,9,9,9,1,9],
+            [1,9,9,9,9,9,9,9,1],
+        ],
+        point: 90,
+        getPatterns: function() {
+            return mixupPatterns({
+                template1: [
+                    [9,9,9,9,0],
+                    [9,9,9,1,9],
+                    [9,9,1,9,9],
+                    [9,1,9,9,9],
+                    [1,9,9,9,9]
+                ],
+                yrange: [0, 0],
+                template2: [
+                    [0,9,9,9,9],
+                    [9,1,9,9,9],
+                    [9,9,1,9,9],
+                    [9,9,9,1,9],
+                    [9,9,9,9,1]
+                ],
+                xrange: [0,4],
+                matParam: {
+                    width: 9,
+                    height: 5,
+                    val:9
+                }
+            });
+        }
+    },
     /**
      * dead 4 and live 3
      */
-    // loops
+    // orthogonally
     {
         pattern: [
             [0,9,9,9,9],
@@ -189,6 +261,7 @@ const dictionary = [
             });
         }
     },
+    // semi-diagonally
     {
         pattern: [
             [0,9,9,9,9],
@@ -220,10 +293,82 @@ const dictionary = [
             });
         }
     },
+    // full-diagonally (part 1)
+    {
+        pattern: [
+            [9,9,0,9,1,9,9],
+            [9,9,9,1,9,9,9],
+            [9,9,1,9,1,9,9],
+            [9,1,9,9,9,1,9],
+            [0,9,9,9,9,9,0],
+        ],
+        point: 90,
+        getPatterns: function() {
+            return mixupPatterns({
+                template1: [
+                    [9,9,9,9,1],
+                    [9,9,9,1,9],
+                    [9,9,1,9,9],
+                    [9,1,9,9,9],
+                    [0,9,9,9,9]
+                ],
+                yrange: [0, 0],
+                template2: [
+                    [0,9,9,9,9],
+                    [9,1,9,9,9],
+                    [9,9,1,9,9],
+                    [9,9,9,1,9],
+                    [9,9,9,9,0]
+                ],
+                xrange: [0,2],
+                matParam: {
+                    width: 8,
+                    height: 5,
+                    val:9
+                }
+            });
+        }
+    },
+    // full-diagonally (part 2)
+    {
+        pattern: [
+            [9,9,0,9,0,9,9],
+            [9,9,9,1,9,9,9],
+            [9,9,1,9,1,9,9],
+            [9,1,9,9,9,1,9],
+            [1,9,9,9,9,9,0],
+        ],
+        point: 90,
+        getPatterns: function() {
+            return mixupPatterns({
+                template1: [
+                    [9,9,9,9,0],
+                    [9,9,9,1,9],
+                    [9,9,1,9,9],
+                    [9,1,9,9,9],
+                    [1,9,9,9,9]
+                ],
+                yrange: [0, 0],
+                template2: [
+                    [0,9,9,9,9],
+                    [9,1,9,9,9],
+                    [9,9,1,9,9],
+                    [9,9,9,1,9],
+                    [9,9,9,9,0]
+                ],
+                xrange: [0,2],
+                matParam: {
+                    width: 8,
+                    height: 5,
+                    val:9
+                }
+            });
+        }
+    },
     /**
      * double live 3
      */
-    // loop
+    // orthogonally
     {
         pattern: [
             [9,0,9,9,9],
@@ -255,7 +400,7 @@ const dictionary = [
             });
         }
     },
-    // loop
+    // semi-diagonally
     {
         pattern: [
             [0,9,9,9,9],
@@ -264,7 +409,7 @@ const dictionary = [
             [9,9,9,1,9],
             [9,9,9,9,0]
         ],
-        point: 90,
+        point: 80,
         getPatterns: function() {
             return mixupPatterns({
                 template1: [
@@ -287,10 +432,46 @@ const dictionary = [
             });
         }
     },
+    // full-diagonally
+    {
+        pattern: [
+            [9,9,0,9,0,9,9],
+            [9,9,9,1,9,9,9],
+            [9,9,1,9,1,9,9],
+            [9,1,9,9,9,1,9],
+            [0,9,9,9,9,9,0]
+        ],
+        point: 80,
+        getPatterns: function() {
+            return mixupPatterns({
+                template1: [
+                    [9,9,9,9,0],
+                    [9,9,9,1,9],
+                    [9,9,1,9,9],
+                    [9,1,9,9,9],
+                    [0,9,9,9,9]
+                ],
+                yrange: [0,0],
+                template2: [
+                    [0,9,9,9,9],
+                    [9,1,9,9,9],
+                    [9,9,1,9,9],
+                    [9,9,9,1,9],
+                    [9,9,9,9,0]
+                ],
+                xrange: [0,2],
+                matParam: {
+                    width: 7,
+                    height: 5,
+                    val:9
+                }
+            });
+        }
+    },
     /**
      * live 3 and dead 3
      */
-    // loop
+    // orthogonally
     {
         pattern: [
             [0,9,9,9],
@@ -322,7 +503,7 @@ const dictionary = [
             });
         }
     },
-    // loop
+    // semi-diagonally
     {
         pattern: [
             [0,9,9,9,9],
@@ -353,7 +534,8 @@ const dictionary = [
                 }
             });
         }
-    },{
+    },
+    {
         pattern: [
             [0,9,9,9,9],
             [0,1,1,1,9],
@@ -378,6 +560,76 @@ const dictionary = [
                 xrange: (yval) => [0, 3-yval],
                 matParam: {
                     width: 7,
+                    height: 5,
+                    val:9
+                }
+            });
+        }
+    },
+    // full-diagonally (part 1)
+    {
+        pattern: [
+            [9,9,1,9,0,9],
+            [9,9,9,1,9,9],
+            [9,9,1,9,1,9],
+            [9,1,9,9,9,0],
+            [0,9,9,9,9,9]
+        ],
+        point: 70,
+        getPatterns: function() {
+            return mixupPatterns({
+                template1: [
+                    [9,9,9,9,0],
+                    [9,9,9,1,9],
+                    [9,9,1,9,9],
+                    [9,1,9,9,9],
+                    [0,9,9,9,9]
+                ],
+                yrange: [0,0],
+                template2: [
+                    [1,9,9,9],
+                    [9,1,9,9],
+                    [9,9,1,9],
+                    [9,9,9,0]
+                ],
+                xrange: [0,2],
+                matParam: {
+                    width: 6,
+                    height: 5,
+                    val:9
+                }
+            });
+        }
+    },
+    // full-diagonally (part 2)
+    {
+        pattern: [
+            [9,9,1,9,0,9],
+            [9,9,9,1,9,9],
+            [9,9,1,9,1,9],
+            [9,1,9,9,9,0],
+            [0,9,9,9,9,9]
+        ],
+        point: 70,
+        getPatterns: function() {
+            return mixupPatterns({
+                template1: [
+                    [9,9,9,9,0],
+                    [9,9,9,1,9],
+                    [9,9,1,9,9],
+                    [9,1,9,9,9],
+                    [0,9,9,9,9]
+                ],
+                yrange: [0,0],
+                template2: [
+                    [0,9,9,9],
+                    [9,1,9,9],
+                    [9,9,1,9],
+                    [9,9,9,1]
+                ],
+                xrange: [0,2],
+                matParam: {
+                    width: 6,
                     height: 5,
                     val:9
                 }
@@ -429,7 +681,8 @@ const dictionary = [
             [9,0,9,9],
         ],
         point: 40
-    },{
+    },
+    {
         pattern: [
             [0,9,9,9],
             [0,1,1,0],
@@ -446,7 +699,8 @@ const dictionary = [
             [0,1,1,1]
         ],
         point: 30
-    },{
+    },
+    {
         pattern: [
             [1,9,9,9],
             [9,1,9,9],
@@ -463,7 +717,8 @@ const dictionary = [
             [0,1,1,0]
         ],
         point: 20
-    },{
+    },
+    {
         pattern: [
             [0,9,9,9],
             [9,1,9,9],
@@ -480,7 +735,8 @@ const dictionary = [
             [0,1,1]
         ],
         point: 10
-    },{
+    },
+    {
         pattern: [
             [0,9,9],
             [9,1,9],
@@ -516,5 +772,9 @@ let patterns = flatten(dictionary.map((item) => {
         }
     });
 }));
+
+// patterns.filter((p) => p.point === 71).map(({pattern}) => {
+//     console.log(util.matrix2string(pattern));
+// });
 
 export default patterns;

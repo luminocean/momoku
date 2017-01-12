@@ -33,6 +33,14 @@ export function mapLoop(length, callback){
     return results;
 }
 
+export function matrix2string(mat){
+    let result = '';
+    for(let j=0; j<mat.length; j++){
+        result += mat[j].join(' ') + "\n";
+    }
+    return result;
+}
+
 export function stopForDebug(square){
     let filter = (square, r, c) => {
         return square[r][c] !== 0 && square[r][c+1] !== undefined && square[r][c+1] !== 0;

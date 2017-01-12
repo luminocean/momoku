@@ -21,7 +21,7 @@ $row-index-width: 25px;
     display: inline-block;
     text-align: center;
     width: $row-index-width;
-
+    line-height: $cell-height;
   }
 
   .col-index{

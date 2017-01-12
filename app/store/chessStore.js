@@ -69,6 +69,8 @@ class ChessStore extends EventEmitter {
         // someone wins already
         if (this.state.progress >= 3) return;
 
+        console.log(`play move [r:${row}, c:${col}]`);
+
         let data = this.state.data;
         let progress = this.state.progress;
 
@@ -112,7 +114,6 @@ class ChessStore extends EventEmitter {
         for (let i = 0; i < plans.length; i++) {
             let plan = plans[i];
 
-            let max = 0;
             for (let j = 0; j < poses.length; j++) {
                 let pos = poses[j];
 
@@ -123,11 +124,8 @@ class ChessStore extends EventEmitter {
 
                 if (data[r][c] === mover) {
                     n += 1;
-                    if (n > max) {
-                        max = n;
-                        // we have a winner
-                        if (max === limit) return mover;
-                    }
+                    // we have a winner
+                    if (n === limit) return mover;
                 } else {
                     n = 0;
                 }
