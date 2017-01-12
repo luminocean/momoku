@@ -1,4 +1,8 @@
-# How to play with it
+# Live demo
+
+You can play with it here: https://luminocean.github.io/momoku/
+
+# How to build it
 
 1. clone:
 `git clone https://github.com/luminocean/momoku.git`
@@ -13,4 +17,4 @@
 
 # Tips
 
-- press `A` key as a shortcut to perform AI moves
+- press `A` key as a shortcut to perform AI moves (Chrome only)
