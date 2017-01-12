@@ -26,6 +26,28 @@ const flatten = (arr) => {
     return flat.some(Array.isArray) ? flatten(flat) : flat;
 };
 
+const mixupPatterns = ({template1, yrange, template2, xrange, matParam}) => {
+    let patterns = [];
+
+    for(let y=yrange[0]; y<=yrange[1]; y++){
+        let xr;
+        if(xrange instanceof Function){
+            xr = xrange(y);
+        }else{
+            xr = xrange;
+        }
+
+        for(let x=xr[0]; x<=xr[1]; x++){
+            let matrix = mat(matParam.width, matParam.height, matParam.val);
+            coverOnMat(matrix, template1, 0, y);
+            coverOnMat(matrix, template2, x, 0);
+            patterns.push(matrix);
+        }
+    }
+
+    return patterns;
+};
+
 // 1 - self moves
 // 2 - opposite moves or boundry
 // 9 - doesn't care
@@ -68,7 +90,7 @@ const dictionary = [
     /**
      * double dead 4
      */
-    // loops
+    // orthogonally
     {
         pattern: [
             [1,1,1,1,0],
@@ -79,42 +101,28 @@ const dictionary = [
         ],
         point: 90,
         getPatterns: function() {
-            let dimensions = [
-                {
-                    template: [
-                        [1,1,1,1,0]
-                    ],
-                    yrange: [0,3]
-                },
-                {
-                    template: [
-                        [1],
-                        [1],
-                        [1],
-                        [1],
-                        [0]
-                    ],
-                    xrange: [0,3]
+            return mixupPatterns({
+                template1: [
+                    [1,1,1,1,0]
+                ],
+                yrange: [0,3],
+                template2: [
+                    [1],
+                    [1],
+                    [1],
+                    [1],
+                    [0]
+                ],
+                xrange: [0, 3],
+                matParam: {
+                    width: 5,
+                    height: 5,
+                    val:9
                 }
-            ];
-
-            let patterns = [];
-
-            let d1 = dimensions[0];
-            for(let y=d1.yrange[0]; y<=d1.yrange[1]; y++){
-                let d2 = dimensions[1];
-                for(let x=d2.xrange[0]; x<=d2.xrange[1]; x++){
-                    let matrix = mat(5, 5, 9);
-                    coverOnMat(matrix, d1.template, 0, y);
-                    coverOnMat(matrix, d2.template, x, 0);
-                    patterns.push(matrix);
-                }
-            }
-
-            return patterns;
+            });
         }
     },
-    // loops
+    // diagonally
     {
         pattern: [
             [1,1,1,1,0],
@@ -124,8 +132,26 @@ const dictionary = [
             [9,9,9,9,0]
         ],
         point: 90,
-        variants: function(){
-            // need variants here
+        getPatterns: function() {
+            return mixupPatterns({
+                template1: [
+                    [1,1,1,1,0]
+                ],
+                yrange: [0,3],
+                template2: [
+                    [1,9,9,9,9],
+                    [9,1,9,9,9],
+                    [9,9,1,9,9],
+                    [9,9,9,1,9],
+                    [9,9,9,9,0]
+                ],
+                xrange: (yval) => [0, 3-yval],
+                matParam: {
+                    width: 8,
+                    height: 5,
+                    val:9
+                }
+            });
         }
     },
     /**
@@ -140,37 +166,28 @@ const dictionary = [
             [1,9,9,9,9],
             [0,9,9,9,9]
         ],
-        point: 90
-    },
-    {
-        pattern: [
-            [9,0,9,9,9],
-            [1,1,1,1,0],
-            [9,1,9,9,9],
-            [9,1,9,9,9],
-            [9,0,9,9,9]
-        ],
-        point: 90
-    },
-    {
-        pattern: [
-            [9,9,0,9,9],
-            [1,1,1,1,0],
-            [9,9,1,9,9],
-            [9,9,1,9,9],
-            [9,9,0,9,9]
-        ],
-        point: 90
-    },
-    {
-        pattern: [
-            [9,9,9,0,9],
-            [1,1,1,1,0],
-            [9,9,9,1,9],
-            [9,9,9,1,9],
-            [9,9,9,0,9]
-        ],
-        point: 90
+        point: 90,
+        getPatterns: function() {
+            return mixupPatterns({
+                template1: [
+                    [1,1,1,1,0]
+                ],
+                yrange: [1,3],
+                template2: [
+                    [0],
+                    [1],
+                    [1],
+                    [1],
+                    [0]
+                ],
+                xrange: [0, 3],
+                matParam: {
+                    width: 5,
+                    height: 5,
+                    val:9
+                }
+            });
+        }
     },
     {
         pattern: [
@@ -181,11 +198,32 @@ const dictionary = [
             [9,9,9,9,0]
         ],
         point: 90,
-        variants: function(){
-            // swap horizontally
+        getPatterns: function() {
+            return mixupPatterns({
+                template1: [
+                    [1,1,1,1,0]
+                ],
+                yrange: [1,3],
+                template2: [
+                    [0,9,9,9,9],
+                    [9,1,9,9,9],
+                    [9,9,1,9,9],
+                    [9,9,9,1,9],
+                    [9,9,9,9,0]
+                ],
+                xrange: (yval) => [0, 3-yval],
+                matParam: {
+                    width: 7,
+                    height: 5,
+                    val:9
+                }
+            });
         }
     },
-    // double live 3
+    /**
+     * double live 3
+     */
+    // loop
     {
         pattern: [
             [9,0,9,9,9],
@@ -195,11 +233,64 @@ const dictionary = [
             [9,0,9,9,9]
         ],
         point: 80,
-        variants: function(){
-            // swap horizontally
+        getPatterns: function() {
+            return mixupPatterns({
+                template1: [
+                    [0,1,1,1,0]
+                ],
+                yrange: [1,3],
+                template2: [
+                    [0],
+                    [1],
+                    [1],
+                    [1],
+                    [0]
+                ],
+                xrange: [1, 3],
+                matParam: {
+                    width: 5,
+                    height: 5,
+                    val:9
+                }
+            });
         }
     },
-    // live 3 and dead 3
+    // loop
+    {
+        pattern: [
+            [0,9,9,9,9],
+            [0,1,1,1,0],
+            [9,9,1,9,9],
+            [9,9,9,1,9],
+            [9,9,9,9,0]
+        ],
+        point: 90,
+        getPatterns: function() {
+            return mixupPatterns({
+                template1: [
+                    [0,1,1,1,0]
+                ],
+                yrange: [1,3],
+                template2: [
+                    [0,9,9,9,9],
+                    [9,1,9,9,9],
+                    [9,9,1,9,9],
+                    [9,9,9,1,9],
+                    [9,9,9,9,0]
+                ],
+                xrange: (yval) => [0, 3-yval],
+                matParam: {
+                    width: 7,
+                    height: 5,
+                    val:9
+                }
+            });
+        }
+    },
+    /**
+     * live 3 and dead 3
+     */
+    // loop
     {
         pattern: [
             [0,9,9,9],
@@ -209,11 +300,93 @@ const dictionary = [
             [0,9,9,9]
         ],
         point: 70,
-        variants: function(){
-            // swap horizontally
+        getPatterns: function() {
+            return mixupPatterns({
+                template1: [
+                    [1,1,1,0]
+                ],
+                yrange: [1,3],
+                template2: [
+                    [0],
+                    [1],
+                    [1],
+                    [1],
+                    [0]
+                ],
+                xrange: [0, 2],
+                matParam: {
+                    width: 4,
+                    height: 5,
+                    val:9
+                }
+            });
         }
     },
-    // live 3
+    // loop
+    {
+        pattern: [
+            [0,9,9,9,9],
+            [9,1,1,1,0],
+            [9,9,1,9,9],
+            [9,9,9,1,9],
+            [9,9,9,9,0]
+        ],
+        point: 70,
+        getPatterns: function() {
+            return mixupPatterns({
+                template1: [
+                    [9,1,1,1,0]
+                ],
+                yrange: [1,3],
+                template2: [
+                    [0,9,9,9,9],
+                    [9,1,9,9,9],
+                    [9,9,1,9,9],
+                    [9,9,9,1,9],
+                    [9,9,9,9,0]
+                ],
+                xrange: (yval) => [0, 3-yval],
+                matParam: {
+                    width: 7,
+                    height: 5,
+                    val:9
+                }
+            });
+        }
+    },{
+        pattern: [
+            [0,9,9,9,9],
+            [0,1,1,1,9],
+            [9,9,1,9,9],
+            [9,9,9,1,9],
+            [9,9,9,9,0]
+        ],
+        point: 70,
+        getPatterns: function() {
+            return mixupPatterns({
+                template1: [
+                    [0,1,1,1,9]
+                ],
+                yrange: [1,3],
+                template2: [
+                    [0,9,9,9,9],
+                    [9,1,9,9,9],
+                    [9,9,1,9,9],
+                    [9,9,9,1,9],
+                    [9,9,9,9,0]
+                ],
+                xrange: (yval) => [0, 3-yval],
+                matParam: {
+                    width: 7,
+                    height: 5,
+                    val:9
+                }
+            });
+        }
+    },
+    /**
+     * live 3
+     */
     {
         pattern: [[0,1,1,1,0]],
         point: 60
@@ -343,7 +516,5 @@ let patterns = flatten(dictionary.map((item) => {
         }
     });
 }));
-
-console.log(patterns.length);
 
 export default patterns;

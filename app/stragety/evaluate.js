@@ -79,10 +79,6 @@ const rotate = (square) => {
 export default function evaluate(data, row, col, mover){
     let square = cropSquare(data, row, col, 4); // take a radius of 4
 
-    if(util.stopForDebug(square)){
-        console.log("a stop");
-    }
-
     convertView(square, mover);
 
     let point = 0;
@@ -91,7 +87,7 @@ export default function evaluate(data, row, col, mover){
     do{
         let p = comparePatternsInSquare(square, patterns);
         if( p > point ) point = p;
-        rotate(square);
+        square = rotate(square);
     }while(++count < 4);
 
     return point;
