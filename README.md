@@ -7,7 +7,7 @@
 `npm install`
 
 3. build:
-`npm build`
+`npm run build`
 
 4. open `build/index.html` and there you go.
 
